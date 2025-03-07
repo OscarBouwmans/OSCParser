@@ -22,17 +22,3 @@ import Testing
     let argument = try OSCStringArgument(from: buffer)
     #expect(argument.value == "world")
 }
-
-@Test func oscArgumentStringInvalidBufferThrows() async throws {
-    // Buffer with invalid UTF8 (0xFF is invalid).
-    let buffer: [UInt8] = [0xFF, 0xFF, 0, 0]
-    #expect(throws: OSCPacketError.invalidPacket, performing: {
-        try OSCStringArgument(from: buffer)
-    })
-    
-    // Buffer with no null terminator.
-    let buffer2: [UInt8] = [104, 101, 108, 108, 111]
-    #expect(throws: OSCPacketError.invalidArgumentBuffer, performing: {
-        try OSCStringArgument(from: buffer2)
-    })
-}

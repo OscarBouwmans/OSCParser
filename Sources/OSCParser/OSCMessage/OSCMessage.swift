@@ -1,6 +1,3 @@
-
-import Foundation
-
 public struct OSCMessage: OSCPacket {
     public let addressParts: [String]
     public let arguments: [any OSCArgument]
@@ -28,10 +25,10 @@ public struct OSCMessage: OSCPacket {
             throw OSCPacketError.invalidPacket
         }
         let firstNullIndex = buffer.firstIndex(of: 0)!
-        let address = String(bytes: buffer[..<firstNullIndex], encoding: .utf8)!
+        let address = String(decoding: buffer[..<firstNullIndex], as: UTF8.self)
         let typeTagsStartIndex = firstNullIndex + (4 - (firstNullIndex % 4))
         let typeTagsEndIndex = buffer[typeTagsStartIndex...].firstIndex(of: 0)!
-        let typeTags = String(bytes: buffer[typeTagsStartIndex..<typeTagsEndIndex], encoding: .utf8)!
+        let typeTags = String(decoding: buffer[typeTagsStartIndex..<typeTagsEndIndex], as: UTF8.self)
         
         var nextArgumentIndex = typeTagsEndIndex + (4 - (typeTagsEndIndex % 4))
         var arguments: [any OSCArgument] = []

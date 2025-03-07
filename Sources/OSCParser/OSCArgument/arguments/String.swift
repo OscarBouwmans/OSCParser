@@ -15,9 +15,7 @@ public struct OSCStringArgument: OSCArgumentWithData {
         guard let firstNullIndex = buffer.firstIndex(of: 0) else {
             throw OSCPacketError.invalidArgumentBuffer
         }
-        guard let stringValue = String(bytes: buffer[0..<firstNullIndex], encoding: .utf8) else {
-            throw OSCPacketError.invalidPacket
-        }
+        let stringValue = String(decoding: buffer[0..<firstNullIndex], as: UTF8.self)
         self.value = stringValue
     }
 }
