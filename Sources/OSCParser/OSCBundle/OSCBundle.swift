@@ -1,6 +1,4 @@
 
-import Foundation
-
 public struct OSCBundle: OSCPacket {
     public let timetag: OSCTimetag
     public let elements: [OSCPacket]

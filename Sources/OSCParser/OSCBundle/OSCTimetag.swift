@@ -1,6 +1,4 @@
 
-import Foundation
-
 public struct OSCTimetag: Equatable, Sendable {
     public let rawValue: UInt64
     
