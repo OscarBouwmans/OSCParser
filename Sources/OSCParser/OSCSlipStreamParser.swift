@@ -63,7 +63,6 @@ public class OSCSlipStreamParser {
                     return SlipStreamParserResult(nextParser: defaultParser(), result: packet)
                 }
                 catch let error {
-                    print("\(error)")
                     return SlipStreamParserResult(nextParser: defaultParser())
                 }
             case ESC: // ESC
