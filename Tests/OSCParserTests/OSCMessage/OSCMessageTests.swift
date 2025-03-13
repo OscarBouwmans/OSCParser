@@ -45,3 +45,17 @@ import Testing
         try OSCMessage(from: [47, 104, 101, 108, 108, 111, 0, 0, 44, 120, 0, 0])
     })
 }
+
+@Test func oscMessageWithAlternateInitializer() async throws {
+    let message1 = OSCMessage("/foo")
+    let compare1 = OSCMessage(address: ["foo"])
+    #expect(message1.buffer == compare1.buffer)
+    
+    let message2 = OSCMessage("/foo/bar", OSCStringArgument(value: "hello"), OSCInt32Argument(value: 42))
+    let compare2 = OSCMessage(address: ["foo", "bar"], arguments: [OSCStringArgument(value: "hello"), OSCInt32Argument(value: 42)])
+    #expect(message2.buffer == compare2.buffer)
+    
+    let message3 = OSCMessage("")
+    let compare3 = OSCMessage(address: [])
+    #expect(message3.buffer == compare3.buffer)
+}

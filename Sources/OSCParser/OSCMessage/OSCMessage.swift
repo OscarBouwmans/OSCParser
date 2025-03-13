@@ -48,6 +48,12 @@ public struct OSCMessage: OSCPacket {
     }
 }
 
+public extension OSCMessage {
+    init(_ address: String, _ arguments: any OSCArgument...) {
+        self.init(address: address.split(separator: "/").map(String.init), arguments: arguments)
+    }
+}
+
 public extension String {
     func toOSCString() -> [UInt8] {
         let utf8Bytes = Array(self.utf8)
