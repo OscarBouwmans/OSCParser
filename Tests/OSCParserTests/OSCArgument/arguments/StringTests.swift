@@ -22,3 +22,11 @@ import Testing
     let argument = try OSCStringArgument(from: buffer)
     #expect(argument.value == "world")
 }
+
+@Test func oscArgumentStringFromInvalidBuffer() async throws {
+    // Buffer representing "worldddd": [119,111,114,108,100] + without padding.
+    let buffer: [UInt8] = [119, 111, 114, 108, 100, 100, 100, 100]
+    #expect(throws: OSCPacketError.invalidArgumentBuffer, performing: {
+        try OSCStringArgument(from: buffer)
+    })
+}

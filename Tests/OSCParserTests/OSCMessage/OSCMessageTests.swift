@@ -44,6 +44,16 @@ import Testing
     #expect(throws: OSCPacketError.unrecognizedTypeTag, performing: {
         try OSCMessage(from: [47, 104, 101, 108, 108, 111, 0, 0, 44, 120, 0, 0])
     })
+    
+    // no zeroes
+    #expect(throws: OSCPacketError.invalidPacket, performing: {
+        try OSCMessage(from: [1, 2, 3, 4])
+    })
+    
+    // no zeroes in type tag
+    #expect(throws: OSCPacketError.invalidPacket, performing: {
+        try OSCMessage(from: [47, 104, 101, 108, 108, 111, 0, 0, 44, 105, 105, 105])
+    })
 }
 
 @Test func oscMessageWithAlternateInitializer() async throws {

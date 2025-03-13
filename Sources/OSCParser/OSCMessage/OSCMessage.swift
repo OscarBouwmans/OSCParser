@@ -24,10 +24,14 @@ public struct OSCMessage: OSCPacket {
         guard buffer.count % 4 == 0 else {
             throw OSCPacketError.invalidPacket
         }
-        let firstNullIndex = buffer.firstIndex(of: 0)!
+        guard let firstNullIndex = buffer.firstIndex(of: 0) else {
+            throw OSCPacketError.invalidPacket
+        }
         let address = String(decoding: buffer[..<firstNullIndex], as: UTF8.self)
         let typeTagsStartIndex = firstNullIndex + (4 - (firstNullIndex % 4))
-        let typeTagsEndIndex = buffer[typeTagsStartIndex...].firstIndex(of: 0)!
+        guard let typeTagsEndIndex = buffer[typeTagsStartIndex...].firstIndex(of: 0) else {
+            throw OSCPacketError.invalidPacket
+        }
         let typeTags = String(decoding: buffer[typeTagsStartIndex..<typeTagsEndIndex], as: UTF8.self)
         
         var nextArgumentIndex = typeTagsEndIndex + (4 - (typeTagsEndIndex % 4))
